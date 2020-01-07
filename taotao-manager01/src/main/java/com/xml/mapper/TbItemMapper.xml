@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xml.mapper.TbItemMapper">
+	<select id="findTbItemById" parameterType="long" resultType="com.xml.bean.TbItem">
+	SELECT * FROM tbitem WHERE id = #{id}
+	</select>
+	<select id="findTbItemAll" parameterType="int" resultType="com.xml.bean.TbItem">
+	SELECT * FROM tbitem LIMIT #{0},#{1}
+	</select>
+	<select id="findAllCount"  resultType="int" >
+	SELECT COUNT(*) FROM tbitem
+	</select>
+	<!-- 
+	<delete id="deleteTbItemById" parameterType="com.xml.bean.TbItem" >
+     DELETE FROM tbitem WHERE id in 
+     	<foreach separator="," item="tbitem" close=")" open="(" collection="list">#{tbitem.id} </foreach>
+  	</delete> 
+  	 -->
+  	<update id="updateItemByIds">
+		<if test="type==0">
+			UPDATE tbitem SET status = 0
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+		<if test="type==1">
+			UPDATE tbitem SET status = 1
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+		<if test="type==2">
+			UPDATE tbitem SET status = 2
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")" item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+	</update>
+</mapper>
